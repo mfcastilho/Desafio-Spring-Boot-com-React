@@ -1,0 +1,43 @@
+package com.banco.projeto.testeturing.entities;
+
+public class Account {
+
+	private User titular;
+    private int agenciaConta;
+    private int numeroConta;
+    private Double saldoConta;
+    
+
+
+    //Construtores
+    public Account(User titular, int agenciaConta, int numeroConta, Double saldoInicial) {
+        this.titular = titular;
+        this.agenciaConta = agenciaConta;
+        this.numeroConta = numeroConta;
+        this.saldoConta = saldoInicial;
+        
+    }
+
+//    public Conta() {}
+
+    //Getters
+
+
+    public User getTitular() {
+        return titular;
+    }
+
+    public int getAgenciaConta() {
+        return agenciaConta;
+    }
+
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+
+    public Double getSaldoConta() {
+        return saldoConta;
+    }
+
+  
+}

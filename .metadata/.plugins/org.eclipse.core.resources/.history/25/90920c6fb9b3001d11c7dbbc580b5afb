@@ -1,0 +1,2 @@
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','mario@gmail.com', 'Mario Castilho', '@Mmm1234')
+insert into tb_user(cpf,email,nome_completo,senha) values ('0786543332','romari@gmail.com', 'Romario ferreira','@Rrr1234')
