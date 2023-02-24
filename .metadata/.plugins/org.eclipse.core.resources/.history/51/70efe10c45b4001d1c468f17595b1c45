@@ -1,0 +1,5 @@
+package com.banco.projeto.testeturing.exceptions;
+
+public class AuthenticationException {
+
+}

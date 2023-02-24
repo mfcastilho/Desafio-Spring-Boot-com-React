@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
-import com.banco.projeto.testeturing.DTO.UserDTO;
 import com.banco.projeto.testeturing.entities.Account;
-import com.banco.projeto.testeturing.entities.User;
+import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
 import com.banco.projeto.testeturing.repositories.AccountRepository;
 
 @Service
@@ -17,28 +16,39 @@ public class AccountService {
 
 	@Autowired
 	private AccountRepository repository;
-	
-	public List<AccountDTO> findAll () {
+
+	public List<AccountDTO> findAll() {
 		List<Account> list = repository.findAll();
-		
 		List<AccountDTO> listAccountDTO = new ArrayList<>();
-		
-		for(Account account : list) {
-			listAccountDTO.add(new AccountDTO(account));	
-			
+
+		for (Account account : list) {
+			listAccountDTO.add(new AccountDTO(account));
 		}
-		
-		
+
 		return listAccountDTO;
-		
 	}
-	
+
 	public int accountValidation(int account) {
-		int userId = repository.findUserAccount(account);		
-		
-		
-		return userId;	
+		int userId = repository.findUserIdByAccount(account);
+
+		return userId;
 	}
+
+	public Double deposit(Double value, int accountNumber) {
+
+		Account account = repository.findUserAccountByAccountNumber(accountNumber);
 	
-	
+		System.out.println(account);
+		if (value <= 0) {
+			throw new BusinessRulesException("Valor de depósito inválido");
+		}
+
+		account.setSaldoConta(account.getSaldoConta() + value);
+		
+		repository.save(account);
+
+		return account.getSaldoConta();
+
+	}
+
 }

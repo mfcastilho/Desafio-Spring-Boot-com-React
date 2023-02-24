@@ -5,14 +5,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.banco.projeto.testeturing.entities.Account;
-import com.banco.projeto.testeturing.entities.User;
 
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long>{
 	
 	@Query(nativeQuery = true, value = "select id from tb_conta where numero_conta = :account")
-	int findUserAccount(int account);
+	int findUserIdByAccount(int account);
+	
+	@Query(nativeQuery = true, value = "select * from tb_conta where numero_conta = :account")
+	Account findUserAccountByAccountNumber(int account);
 	
 	
 }

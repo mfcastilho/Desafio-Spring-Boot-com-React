@@ -60,6 +60,11 @@ public class AccountDTO implements Serializable{
 	public Double getSaldoConta() {
 		return saldoConta;
 	}
+	
+	public void setSaldoConta(Double saldoConta) {
+		
+		this.saldoConta = saldoConta;
+	}
 
 
 }

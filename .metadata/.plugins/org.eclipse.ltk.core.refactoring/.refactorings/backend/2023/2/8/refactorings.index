@@ -2,3 +2,7 @@
 1677188924814	Rename method 'validaConta'
 1677204518845	Rename local variable 'obj'
 1677206737054	Rename local variable 'accountNumber'
+1677244536429	Delete element
+1677249472695	Rename method 'findUserAccount'
+1677266704811	Rename local variable 'accounNumber'
+1677269274091	Rename local variable 'accountDto'
