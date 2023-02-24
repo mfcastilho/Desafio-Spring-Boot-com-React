@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.banco.projeto.testeturing.entities.Account;
+import com.banco.projeto.testeturing.entities.User;
 
 
 @Repository
@@ -14,5 +15,4 @@ public interface AccountRepository extends JpaRepository<Account, Long>{
 	int findUserAccount(int account);
 	
 	
-
 }

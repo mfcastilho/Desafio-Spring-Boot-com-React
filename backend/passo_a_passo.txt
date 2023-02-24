@@ -1,0 +1,29 @@
+conta/5656676 -> valida
+
+chama outra rota = auth/login
+
+
+user/@Rr1234
+
+
+
+json => user(todos atributos)
+
+colocar o nome do usuario logado
+puxar saldo
+puxar numero agencia
+puxar numero da conta
+
+
+
+
+  const onSubmit = (formData: FormData) => {
+    
+    axios
+      .get(`${BASE_URL}/conta/${numero_conta}`)
+      .then((response) => navigate("/auth/login"))
+      .catch(() => setHasError(true));
+  };
+
+
+

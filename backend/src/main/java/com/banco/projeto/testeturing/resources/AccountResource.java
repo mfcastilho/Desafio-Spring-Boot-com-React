@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
+import com.banco.projeto.testeturing.DTO.UserDTO;
 import com.banco.projeto.testeturing.services.AccountService;
 
 @RestController
@@ -29,9 +30,12 @@ public class AccountResource {
 	
 	@GetMapping(value = "/{account}")
 	public ResponseEntity<Integer> findUserByAccount(@PathVariable int account){
-		int accountNumber =service.accountValidation(account);
-		return ResponseEntity.ok().body(accountNumber);
+		int userId =service.accountValidation(account);
+		return ResponseEntity.ok().body(userId);
 	}
+	
+	
+	
 
 	
 }

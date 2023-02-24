@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
+import com.banco.projeto.testeturing.DTO.UserDTO;
 import com.banco.projeto.testeturing.entities.Account;
+import com.banco.projeto.testeturing.entities.User;
 import com.banco.projeto.testeturing.repositories.AccountRepository;
 
 @Service
@@ -32,10 +34,11 @@ public class AccountService {
 	}
 	
 	public int accountValidation(int account) {
-		int obj = repository.findUserAccount(account);		
+		int userId = repository.findUserAccount(account);		
 		
 		
-		return obj;
-		
+		return userId;	
 	}
+	
+	
 }

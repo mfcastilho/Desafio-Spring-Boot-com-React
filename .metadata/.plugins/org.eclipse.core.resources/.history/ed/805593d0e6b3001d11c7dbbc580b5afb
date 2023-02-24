@@ -1,0 +1,15 @@
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','mario@gmail.com', 'Mario Castilho', '@Mmm1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0786543332','romario@gmail.com', 'Romario ferreira','@Rrr1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','anaromari@gmail.com', 'Ana Souza','@Aaa1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','bia@gmail.com', 'Beatriz Ramos', '@Bbb1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0786543332','joao@gmail.com', 'João Cardozo','@Jjj1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','oswaldo@gmail.com', 'Oswaldo Muniz', '@Ooo1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0786543332','luana@gmail.com', 'Luana Lorena','@Lll1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0975656665','carolina@gmail.com', 'Carolina López', '@Ccc1234');
+insert into tb_user(cpf,email,nome_completo,senha) values ('0786543332','ursula@gmail.com', 'Úrsula Silva','@Uuu1234');
+
+
+
+
+insert into tb_conta(agencia_conta,numero_conta,saldo_conta,usuario_id) values (22950, 67890, 0, 1);
+insert into tb_conta(agencia_conta,numero_conta,saldo_conta,usuario_id) values (22950, 45678, 0, 2);
