@@ -1,0 +1,5 @@
+package com.banco.projeto.testeturing.config;
+
+public class SecurityConfig {
+
+}
