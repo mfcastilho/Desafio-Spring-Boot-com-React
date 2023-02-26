@@ -31,10 +31,6 @@
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.AuthenticationException"/>
     <fullyQualifiedTypeName name="javax.security.sasl.AuthenticationException"/>
     <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
-    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.BusinessRulesException"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.RequestDepositDTO"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Modifying"/>
@@ -44,4 +40,9 @@
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.entities.Account"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.AccountDTO"/>
     <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.BusinessRulesException"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.RequestDTO"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,28 @@
+
+/*@Configuration
+public class SecurityConfig {
+
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserDetailsService userDetailsService;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
+        authenticationManager = authenticationManagerBuilder.build();
+
+        http.csrf().disable().cors().disable().authorizeHttpRequests().antMatchers("/api/v1/account/register", "/api/v1/account/auth").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .authenticationManager(authenticationManager)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        return http.build();
+    }
+
+}*/
+    
+
+    

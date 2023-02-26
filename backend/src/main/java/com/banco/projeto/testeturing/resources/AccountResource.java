@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
-import com.banco.projeto.testeturing.DTO.RequestDepositDTO;
+import com.banco.projeto.testeturing.DTO.RequestDTO;
+import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
 import com.banco.projeto.testeturing.services.AccountService;
 
 @RestController
@@ -31,21 +32,63 @@ public class AccountResource {
 
 	
 	@GetMapping(value = "/{account}")
-	public ResponseEntity<Integer> findUserAccountByAccountNumber(@PathVariable int account){
-		int userId =service.accountValidation(account);
-		return ResponseEntity.ok().body(userId);
+	public ResponseEntity findUserAccountByAccountNumber(@PathVariable int account){
+		
+		try {
+			
+			int userId =service.accountValidation(account);
+			return ResponseEntity.ok().body(userId);
+			
+		} catch (RuntimeException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+		
 	}
 	
 	
 	@PostMapping(value = "/depositar")
-	public ResponseEntity<RequestDepositDTO> deposit(@RequestBody RequestDepositDTO request){
+	public ResponseEntity deposit(@RequestBody RequestDTO request){
 		
-		System.out.println("Conta do Usuário:"+request.getAccountNumber());
-		System.out.println("Valor do depósito:"+request.getValue());
+		try {
+			System.out.println("Conta do Usuário:"+request.getAccountNumber());
+			System.out.println("Valor do depósito:"+request.getValue());
+			int res = service.accountValidation(request.getAccountNumber());
+			try {
+				service.deposit(request.getValue(), request.getAccountNumber());
+				return ResponseEntity.ok().body(request);
+			}catch (BusinessRulesException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}	
+		} catch (NullPointerException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 		
-		service.deposit(request.getValue(), request.getAccountNumber());
+		// TODO: handle exception
 		
-		return ResponseEntity.ok().body(request);
+		
+		
+	}
+	
+	@PostMapping(value = "sacar")
+	public ResponseEntity withDraw(@RequestBody RequestDTO request) {
+		
+		try {
+			System.out.println("Conta do Usuário:"+request.getAccountNumber());
+			System.out.println("Valor do saque:"+request.getValue());
+			
+			
+			
+			Double accountBalance = service.withDraw(request.getValue(), request.getAccountNumber());
+			
+			return ResponseEntity.ok().body("Saldo atual da conta:$"+accountBalance);
+		} catch (BusinessRulesException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
 	}
 	
 	
