@@ -17,8 +17,7 @@ public class AccountService {
 	@Autowired
 	private AccountRepository repository;
 
-	
-	//Pega todas as contas cadastradas no banco de dados
+	// Pega todas as contas cadastradas no banco de dados
 	public List<AccountDTO> findAll() {
 		List<Account> list = repository.findAll();
 		List<AccountDTO> listAccountDTO = new ArrayList<>();
@@ -30,15 +29,14 @@ public class AccountService {
 		return listAccountDTO;
 	}
 
-	//Validação para verificar se a conta existe
+	// Validação para verificar se a conta existe
 	public int accountValidation(int account) {
 		int userId = repository.findUserIdByAccount(account);
 
 		return userId;
 	}
 
-	
-	//Método para fazer depósitos
+	// Método para fazer depósitos
 	public Double deposit(Double value, int accountNumber) {
 
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
@@ -52,12 +50,12 @@ public class AccountService {
 
 		repository.save(account);
 
-		return account.getSaldoConta();
+		account = repository.findUserAccountByAccountNumber(accountNumber);
 
+		return account.getSaldoConta();
 	}
 
-	
-	//Método para fazer saques
+	// Método para fazer saques
 	public Double withDraw(Double value, int accountNumber) {
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
 
@@ -73,138 +71,207 @@ public class AccountService {
 
 		repository.save(account);
 
+		account = repository.findUserAccountByAccountNumber(accountNumber);
+
 		return account.getSaldoConta();
 	}
 
-	
-	//Método para fazer transferências via PIX
+	// Método para fazer transferências via PIX
 	public String pixTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
-		//CONTA DO EMISSOR
+		// CONTA DO EMISSOR
 		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
-		
-		//CONTA DO RECEPTOR
+
+		// CONTA DO RECEPTOR
 		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
 
-		//VALOR MÁXIMO PARA TRANFERÊNCIAS VIA PIX
+		// VALOR MÁXIMO PARA TRANFERÊNCIAS VIA PIX
 		Double maxValue = 5000d;
 
 		// Verificando se os números das contas do emissor e do receptor são iguais
 		if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
+		}
+		
+		// Verificando se o valor a ser tranferido é menor ou igual a zero
+		if (value <= 0) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
 		}
 
 		// Verificando se o valor solicitado para a transferência está dentro do limite
 		// de R$5mil
 		if (value > maxValue) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: O limite de valor máximo permitido para uma transferência via PIX é de R$ 5 mil");
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: O limite de valor máximo permitido para uma transferência via PIX é de R$ 5 mil");
 		}
 
-		// Verificando se o valor a ser tranferido é menor ou igual a zero
-		if (value <= 0) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
-		}
+		
 
 		// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
 		if (value > issuerAccount.getSaldoConta()) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
 		}
 
-		// INSERINDO o valor solicitado para fazer a tranferência da conta do receptor
+		// INSERINDO o valor solicitado para fazer a tranferência para a conta do
+		// receptor
 		receiverAccount.setSaldoConta(receiverAccount.getSaldoConta() + value);
 
 		// RETIRANDO o valor solicitado para fazer a tranferência da conta do emissor
 		issuerAccount.setSaldoConta(issuerAccount.getSaldoConta() - value);
-		
-		//ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
+
+		// ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
 		repository.save(receiverAccount);
-		
-		//ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
+
+		// ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
 		repository.save(issuerAccount);
-		
-		//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
 		receiverAccount = repository.findUserAccountByAccountNumber(receiverAccount.getNumeroConta());
-		
-		//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
 		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
 
-		return "Sua transferência foi realizada com sucesso!\n"
-				+ "Saldo do emissor: R$"+ issuerAccount.getSaldoConta()+"\n"
-						+ "Saldo do receptor: R$"+ receiverAccount.getSaldoConta();
+		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
+				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
 	}
-	
-	
-	//Método para fazer transferências via TED
-		public String tedTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
-			
-			
-			//conta do EMISSOR
-			Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
-			
-			//conta do  RECEPTOR
-			Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
-			
-			
-			
-			//VALOR MÍNIMO PARA TRANFERÊNCIAS VIA TED
-			Double minValue = 5000d;
-			
-			//VALOR MÁXIMO PARA TRANFERÊNCIAS VIA TED
-			Double maxValue = 10000d;
-			
-			// Verificando se os números das contas do emissor e do receptor são iguais
-			if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
-				throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
-			}
-			
-			// Verificando se o valor solicitado para a transferência está dentro do limite máximo de R$10mil
-			if(value > maxValue) {
-				throw new BusinessRulesException("Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores até R$ 10 mil");
-			}
-			
-			
-			// Verificando se o valor solicitado para a transferência está dentro do mínimo de R$5000,001mil
-			if(value <= minValue) {
-				throw new BusinessRulesException("Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores acima de R$ 5 mil");
-			}
-			
-			// Verificando se o valor a ser tranferido é menor ou igual a zero
-			if (value <= 0) {
-				throw new BusinessRulesException("Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
-			}
 
-			// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
-			if (value > issuerAccount.getSaldoConta()) {
-				throw new BusinessRulesException("Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
-			}
-			
-			
-			// INSERINDO o valor solicitado para fazer a tranferência da conta do receptor
-			receiverAccount.setSaldoConta(receiverAccount.getSaldoConta() + value);
+	// Método para fazer transferências via TED
+	public String tedTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
-			// RETIRANDO o valor solicitado para fazer a tranferência da conta do emissor
-			issuerAccount.setSaldoConta(issuerAccount.getSaldoConta() - value);
-			
-			
-			//ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
-			repository.save(receiverAccount);
-			
-			//ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
-			repository.save(issuerAccount);
-			
-			//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
-			receiverAccount = repository.findUserAccountByAccountNumber(receiverAccount.getNumeroConta());
-			
-			//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
-			issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
+		// conta do EMISSOR
+		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
 
-			return "Sua transferência foi realizada com sucesso!\n"
-					+ "Saldo do emissor: R$"+ issuerAccount.getSaldoConta()+"\n"
-							+ "Saldo do receptor: R$"+ receiverAccount.getSaldoConta();	
+		// conta do RECEPTOR
+		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+
+		// VALOR MÍNIMO PARA TRANFERÊNCIAS VIA TED
+		Double minValue = 5000d;
+
+		// VALOR MÁXIMO PARA TRANFERÊNCIAS VIA TED
+		Double maxValue = 10000d;
+
+		// Verificando se os números das contas do emissor e do receptor são iguais
+		if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
 		}
 		
+		// Verificando se o valor a ser tranferido é menor ou igual a zero
+		if (value <= 0) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
+		}
+
+		// Verificando se o valor solicitado para a transferência está dentro do limite
+		// máximo de R$10mil
+		if (value > maxValue) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores até R$ 10 mil");
+		}
+
+		// Verificando se o valor solicitado para a transferência está dentro do mínimo
+		// de R$5.000,001
+		if (value <= minValue) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores acima de R$ 5 mil");
+		}
+
 		
-	
+
+		// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
+		if (value > issuerAccount.getSaldoConta()) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
+		}
+
+		// INSERINDO o valor solicitado para fazer a tranferência para a conta do
+		// receptor
+		receiverAccount.setSaldoConta(receiverAccount.getSaldoConta() + value);
+
+		// RETIRANDO o valor solicitado para fazer a tranferência da conta do emissor
+		issuerAccount.setSaldoConta(issuerAccount.getSaldoConta() - value);
+
+		// ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
+		repository.save(receiverAccount);
+
+		// ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
+		repository.save(issuerAccount);
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
+		receiverAccount = repository.findUserAccountByAccountNumber(receiverAccount.getNumeroConta());
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
+		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
+
+		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
+				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
+	}
+
+	// Método para fazer transferências via DOC
+	public String docTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
+
+		// conta do EMISSOR
+		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
+
+		// conta do RECEPTOR
+		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+
+		// VALOR MÍNIMO PARA TRANFERÊNCIAS VIA DOC
+		Double minValue = 10000d;
+
+		// Verificando se os números das contas do emissor e do receptor são iguais
+		if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
+		}
+		
+		// Verificando se o valor a ser tranferido é menor ou igual a zero
+		if (value <= 0) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
+		}
+
+		// Verificando se o valor solicitado para a transferência está dentro do limite
+		// mínimo de R$10.000,01
+		if (value <= minValue) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: Transferências via DOC só são permitidas para valores acima de R$ 10 mil");
+		}
+
+		
+
+		// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
+		if (value > issuerAccount.getSaldoConta()) {
+			throw new BusinessRulesException(
+					"Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
+		}
+
+		// INSERINDO o valor solicitado para fazer a tranferência para a conta do
+		// receptor
+		receiverAccount.setSaldoConta(receiverAccount.getSaldoConta() + value);
+
+		// RETIRANDO o valor solicitado para fazer a tranferência da conta do emissor
+		issuerAccount.setSaldoConta(issuerAccount.getSaldoConta() - value);
+
+		// ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
+		repository.save(receiverAccount);
+
+		// ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
+		repository.save(issuerAccount);
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
+		receiverAccount = repository.findUserAccountByAccountNumber(receiverAccount.getNumeroConta());
+
+		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
+		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
+
+		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
+				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
+
+	}
 	
 	
 
