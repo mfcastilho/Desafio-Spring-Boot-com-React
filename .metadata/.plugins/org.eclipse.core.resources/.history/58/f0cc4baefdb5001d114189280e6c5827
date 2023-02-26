@@ -1,0 +1,27 @@
+package com.banco.projeto.testeturing.DTO;
+
+public class transferRequestDTO {
+	
+	private int issuerAccountNumber;
+	private int receiverAccountNumber;
+	private Double value;
+	
+	
+	
+	public int getIssuerAccountNumber() {
+		return issuerAccountNumber;
+	}
+	
+	public int getReceiverAccountNumber() {
+		return receiverAccountNumber;
+	}
+	
+	public Double getValue() {
+		return value;
+	}
+	
+	
+	
+	
+
+}

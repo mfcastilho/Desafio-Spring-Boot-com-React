@@ -1,0 +1,5 @@
+base de dados  - ok
+autenticação da senha(front) - ok
+Operador e receptor iniciam com saldo $0,0 - ok
+
+Páginas do front end - ok

@@ -20,16 +20,11 @@
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.services.AccountService"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.resources.AccountResource"/>
-    <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.services.UserServices"/>
-    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
-    <fullyQualifiedTypeName name="java.util.Optional"/>
-    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.AuthenticationException"/>
-    <fullyQualifiedTypeName name="javax.security.sasl.AuthenticationException"/>
     <fullyQualifiedTypeName name="javax.transaction.Transactional"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.RequestDepositDTO"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
@@ -40,9 +35,15 @@
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.entities.Account"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.AccountDTO"/>
     <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
-    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.BusinessRulesException"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.RequestDTO"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.AuthenticationException"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
+    <fullyQualifiedTypeName name="javax.security.sasl.AuthenticationException"/>
+    <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.BusinessRulesException"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
 </qualifiedTypeNameHistroy>

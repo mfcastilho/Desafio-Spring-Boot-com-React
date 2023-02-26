@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
 import com.banco.projeto.testeturing.DTO.RequestDTO;
+import com.banco.projeto.testeturing.DTO.TransferRequestDTO;
 import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
 import com.banco.projeto.testeturing.services.AccountService;
 
@@ -90,6 +91,21 @@ public class AccountResource {
 		}
 		
 	}
+	
+	
+	@PostMapping(value = "/transferencias/pix")
+	public ResponseEntity pixTransfer( @RequestBody TransferRequestDTO request) {
+		
+		try {
+			String response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+			
+			return ResponseEntity.ok().body(response);
+		} catch (BusinessRulesException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	
 	
 	
