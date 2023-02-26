@@ -31,20 +31,21 @@ const AuthAccountPage = ()=>{
  
   
 
-  return(<div class="container">
-  <section class="form-login">
+  return(
+  <div className="container">
+    <section className="form-login">
       <form >
-          <h1 class="text-center mb-3 title">Banco Itaú</h1>
+          <h1 className="text-center mb-3 title">Banco Itaú</h1>
 
-          <div class="mb-3">
-            {/* <label for="conta" class="form-label">Digite o número da sua conta</label> */}
-            <input type="number" class="form-control" name="conta" id="conta" placeholder="Digite o número da sua conta" />
+          <div className="mb-3">
+            {/* <label for="conta" className="form-label">Digite o número da sua conta</label> */}
+            <input type="number" className="form-control" name="conta" id="conta" placeholder="Digite o número da sua conta" />
           </div>
           
-          <button type="submit" class="btn btn-primary w-100 button">Acessar</button>
+          <button type="submit" className="btn btn-primary w-100 button">Acessar</button>
         </form>
-  </section>
-</div>);
+    </section>
+  </div>);
 
 }
 

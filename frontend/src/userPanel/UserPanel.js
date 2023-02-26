@@ -5,21 +5,21 @@ import "./UserPanel.css";
 const UserPanel = ()=>{
 
   return (
-  <div class="container">
-    <section class="form-register user-panel-box">
-        <div class="w-75 mx-auto">
-            <div class="loading">
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden">Loading...</span>
+  <div className="container">
+    <section className="form-register user-panel-box">
+        <div className="w-75 mx-auto">
+            <div className="loading">
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
             
-            <h1 class="text-center mb-3">Banco Itaú</h1>
+            <h1 className="text-center mb-3">Banco Itaú</h1>
 
-            <h4 class="text-center mb-3 subtitle">Área do cliente</h4>
-            <div class="mb-3 client-infos">
+            <h4 className="text-center mb-3 subtitle">Área do cliente</h4>
+            <div className="mb-3 client-infos">
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
                 <h6>Agência</h6>
@@ -27,10 +27,10 @@ const UserPanel = ()=>{
             </div>
 
             
-            <div class="btns-container">
-              <a href="/userPanel/depositos" class="btn-actions">Depositar</a>
-              <a href="/userPanel/saques" class="btn-actions">Sacar</a>
-              <a href="/userPanel/transferencias" class="btn-actions">Transferências</a>
+            <div className="btns-container">
+              <a href="/userPanel/depositos" className="btn-actions">Depositar</a>
+              <a href="/userPanel/saques" className="btn-actions">Sacar</a>
+              <a href="/userPanel/transferencias" className="btn-actions">Transferências</a>
             </div>
             
 
