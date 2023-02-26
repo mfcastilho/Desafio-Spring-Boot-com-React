@@ -91,7 +91,7 @@ public class AccountService {
 
 		// Verificando se os números das contas do emissor e do receptor são iguais
 		if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências a mesma conta");
+			throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
 		}
 
 		// Verificando se o valor solicitado para a transferência está dentro do limite
@@ -134,6 +134,76 @@ public class AccountService {
 	}
 	
 	
+	//Método para fazer transferências via TED
+		public String tedTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
+			
+			
+			//conta do EMISSOR
+			Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
+			
+			//conta do  RECEPTOR
+			Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+			
+			
+			
+			//VALOR MÍNIMO PARA TRANFERÊNCIAS VIA TED
+			Double minValue = 5000d;
+			
+			//VALOR MÁXIMO PARA TRANFERÊNCIAS VIA TED
+			Double maxValue = 10000d;
+			
+			// Verificando se os números das contas do emissor e do receptor são iguais
+			if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
+				throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências para a mesma conta");
+			}
+			
+			// Verificando se o valor solicitado para a transferência está dentro do limite máximo de R$10mil
+			if(value > maxValue) {
+				throw new BusinessRulesException("Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores até R$ 10 mil");
+			}
+			
+			
+			// Verificando se o valor solicitado para a transferência está dentro do mínimo de R$5000,001mil
+			if(value <= minValue) {
+				throw new BusinessRulesException("Sua transferência não foi completada pois: Transferências via TED só são permitidas para valores acima de R$ 5 mil");
+			}
+			
+			// Verificando se o valor a ser tranferido é menor ou igual a zero
+			if (value <= 0) {
+				throw new BusinessRulesException("Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
+			}
+
+			// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
+			if (value > issuerAccount.getSaldoConta()) {
+				throw new BusinessRulesException("Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
+			}
+			
+			
+			// INSERINDO o valor solicitado para fazer a tranferência da conta do receptor
+			receiverAccount.setSaldoConta(receiverAccount.getSaldoConta() + value);
+
+			// RETIRANDO o valor solicitado para fazer a tranferência da conta do emissor
+			issuerAccount.setSaldoConta(issuerAccount.getSaldoConta() - value);
+			
+			
+			//ATUALIZANDO INFORMAÇÕES do receptor no banco de dados
+			repository.save(receiverAccount);
+			
+			//ATUALIZANDO INFORMAÇÕES do emissor no banco de dados
+			repository.save(issuerAccount);
+			
+			//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do receptor
+			receiverAccount = repository.findUserAccountByAccountNumber(receiverAccount.getNumeroConta());
+			
+			//PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
+			issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
+
+			return "Sua transferência foi realizada com sucesso!\n"
+					+ "Saldo do emissor: R$"+ issuerAccount.getSaldoConta()+"\n"
+							+ "Saldo do receptor: R$"+ receiverAccount.getSaldoConta();	
+		}
+		
+		
 	
 	
 	

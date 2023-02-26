@@ -1,0 +1,139 @@
+package com.banco.projeto.testeturing.resources;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.banco.projeto.testeturing.DTO.AccountDTO;
+import com.banco.projeto.testeturing.DTO.RequestDTO;
+import com.banco.projeto.testeturing.DTO.TransferRequestDTO;
+import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
+import com.banco.projeto.testeturing.services.AccountService;
+
+@RestController
+@RequestMapping(value = "/conta")
+public class AccountResource {
+	
+	@Autowired
+	public AccountService service;
+	
+	@GetMapping
+	public ResponseEntity<List<AccountDTO>> findAll(){
+		List<AccountDTO> listDTO = service.findAll();
+		
+		return ResponseEntity.ok().body(listDTO);
+	}
+
+	
+	@GetMapping(value = "/{account}")
+	public ResponseEntity findUserAccountByAccountNumber(@PathVariable int account){
+		
+		try {
+			
+			int userId =service.accountValidation(account);
+			return ResponseEntity.ok().body(userId);
+			
+		} catch (RuntimeException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+		
+	}
+	
+	
+	@PostMapping(value = "/depositar")
+	public ResponseEntity deposit(@RequestBody RequestDTO request){
+		
+		try {
+			System.out.println("Conta do Usuário:"+request.getAccountNumber());
+			System.out.println("Valor do depósito:"+request.getValue());
+			int res = service.accountValidation(request.getAccountNumber());
+			try {
+				service.deposit(request.getValue(), request.getAccountNumber());
+				return ResponseEntity.ok().body(request);
+			}catch (BusinessRulesException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}	
+		} catch (NullPointerException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+		// TODO: handle exception
+		
+		
+		
+	}
+	
+	@PostMapping(value = "sacar")
+	public ResponseEntity withDraw(@RequestBody RequestDTO request) {
+		
+		try {
+			System.out.println("Conta do Usuário:"+request.getAccountNumber());
+			System.out.println("Valor do saque:"+request.getValue());
+			
+			
+			
+			Double accountBalance = service.withDraw(request.getValue(), request.getAccountNumber());
+			
+			return ResponseEntity.ok().body("Saldo atual da conta:$"+accountBalance);
+		} catch (BusinessRulesException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
+	}
+	
+	
+	@PostMapping(value = "/transferencias/pix")
+	public ResponseEntity pixTransfer( @RequestBody TransferRequestDTO request) {
+		
+		try {
+			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			try {
+				String response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				return ResponseEntity.ok().body(response);
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		} catch (NullPointerException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
+	public ResponseEntity tedTransfer(@RequestBody TransferRequestDTO request) {
+		
+		try {
+			
+			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			try {
+				
+				String response = service.tedTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				
+				return ResponseEntity.ok().body(response);
+				
+			} catch (Exception e) {
+				
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		} catch (NullPointerException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
+	
+	
+	
+
+	
+}

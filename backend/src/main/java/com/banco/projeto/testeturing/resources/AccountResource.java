@@ -97,10 +97,39 @@ public class AccountResource {
 	public ResponseEntity pixTransfer( @RequestBody TransferRequestDTO request) {
 		
 		try {
-			String response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
 			
-			return ResponseEntity.ok().body(response);
-		} catch (BusinessRulesException e) {
+			try {
+				
+				String response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				return ResponseEntity.ok().body(response);
+				
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		} catch (NullPointerException e) {
+			
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
+	
+	@PostMapping(value = "/transferencias/ted")
+	public ResponseEntity tedTransfer(@RequestBody TransferRequestDTO request) {
+		
+		try {
+			
+			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			try {
+				
+				String response = service.tedTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				return ResponseEntity.ok().body(response);
+				
+			} catch (Exception e) {
+				
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		} catch (NullPointerException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
