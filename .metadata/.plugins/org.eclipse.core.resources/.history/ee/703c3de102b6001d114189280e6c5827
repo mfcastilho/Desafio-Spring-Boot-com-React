@@ -17,8 +17,6 @@ public class AccountService {
 	@Autowired
 	private AccountRepository repository;
 
-	
-	//Pega todas as contas cadastradas no banco de dados
 	public List<AccountDTO> findAll() {
 		List<Account> list = repository.findAll();
 		List<AccountDTO> listAccountDTO = new ArrayList<>();
@@ -30,15 +28,12 @@ public class AccountService {
 		return listAccountDTO;
 	}
 
-	//Validação para verificar se a conta existe
 	public int accountValidation(int account) {
 		int userId = repository.findUserIdByAccount(account);
 
 		return userId;
 	}
 
-	
-	//Método para fazer depósitos
 	public Double deposit(Double value, int accountNumber) {
 
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
@@ -56,8 +51,6 @@ public class AccountService {
 
 	}
 
-	
-	//Método para fazer saques
 	public Double withDraw(Double value, int accountNumber) {
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
 
@@ -76,8 +69,6 @@ public class AccountService {
 		return account.getSaldoConta();
 	}
 
-	
-	//Método para fazer transferências via PIX
 	public String pixTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
 		//CONTA DO EMISSOR
@@ -91,23 +82,23 @@ public class AccountService {
 
 		// Verificando se os números das contas do emissor e do receptor são iguais
 		if (issuerAccount.getNumeroConta() == receiverAccount.getNumeroConta()) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: Não são permitidas tranferências a mesma conta");
+			throw new BusinessRulesException("Não são permitidas tranferências a mesma conta");
 		}
 
 		// Verificando se o valor solicitado para a transferência está dentro do limite
 		// de R$5mil
 		if (value > maxValue) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: O limite de valor máximo permitido para uma transferência via PIX é de R$ 5 mil");
+			throw new BusinessRulesException("Tranferencia Negada! O limite de valor máximo permitido para uma transferência via PIX é de R$ 5 mil");
 		}
 
 		// Verificando se o valor a ser tranferido é menor ou igual a zero
 		if (value <= 0) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: Valor inserido para fazer a transferência é inválido");
+			throw new BusinessRulesException("Valor inserido para fazer a transferência é inválido");
 		}
 
 		// verificando se o o emissor tem saldo suficiente para efetuar a tranferência
 		if (value > issuerAccount.getSaldoConta()) {
-			throw new BusinessRulesException("Sua transferência não foi completada pois: O Saldo é insuficiente para realizar a transferência");
+			throw new BusinessRulesException("Saldo insuficiente para realizar a transferência");
 		}
 
 		// INSERINDO o valor solicitado para fazer a tranferência da conta do receptor
@@ -132,10 +123,5 @@ public class AccountService {
 				+ "Saldo do emissor: R$"+ issuerAccount.getSaldoConta()+"\n"
 						+ "Saldo do receptor: R$"+ receiverAccount.getSaldoConta();
 	}
-	
-	
-	
-	
-	
 
 }
