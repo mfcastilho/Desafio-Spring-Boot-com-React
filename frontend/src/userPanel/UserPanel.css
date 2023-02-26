@@ -20,7 +20,17 @@ main {
   font-weight: bold
 }
 
+.mb-3{
+  margin: 0!important;
+}
 
+.subtitle{
+  margin-bottom: 20px!important;
+}
+
+.client-infos{
+  margin-bottom: 20px!important;
+}
 
 .btns-container{
 display: flex;

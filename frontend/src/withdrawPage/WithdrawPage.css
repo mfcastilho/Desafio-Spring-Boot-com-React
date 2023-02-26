@@ -1,22 +1,43 @@
 
+
+
 main {
   min-height: 70vh;
 }
 
 .form-login {
-  margin: 100px auto 0 auto;
+  margin: 50px auto;
   width: 70%;
 
   padding: 40px;
-  border: 2px solid #6C4AB6;
+  border: 2px solid #0b53be;
   border-radius: 8px;
   position: relative;
   transition: .6s all;
-  
+
 }
 
-.form-login, form h1 {
-  color: #6C4AB6;
+.mb-3{
+  margin: 0!important;
+}
+
+.subtilte-box{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.subtitle{
+  margin-bottom: 20px;
+  color: #0b53be!important;
+}
+
+.client-infos{
+  margin-bottom: 20px!important;
+}
+
+.form-login, div h1 {
+  color: #0b53be;
   font-weight: bold
 }
 

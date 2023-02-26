@@ -7,35 +7,38 @@ const DepositPage = ()=>{
 
   return(
   <div class="container">
-    <section class="form-login">
-      <form class="w-75 mx-auto" action="/login" method="POST">
-          <h1 class="text-center mb-3">Login</h1>
+    <section class="form-register user-panel-box">
+        <div class="w-75 mx-auto">
+            <div class="loading">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="text-center mb-3">Banco Itaú</h1>
 
-          <div class="mb-3">
-            <label for="conta" class="form-label">Conta</label>
-            <input type="email" class="form-control" name="conta" id="conta"/>
+            <h4 class="text-center mb-3 subtitle">Área do cliente - Depósito</h4>
+            <div class="mb-3 client-infos">
+                <h6>Nome do Cliente</h6>
+                <h6>Número da Conta</h6>
+                <h6>Agência</h6>
+            </div>
+
+            <div class="mb-3">
+            <label for="accountNumber" class="form-label">Conta</label>
+            <input type="text" class="form-control" name="accountNumber" id="accountNumber" placeholder="Insira a conta que deseja depositar"/>
           </div>
+            <div class="mb-3">
+            <label for="password-login" class="form-label">Valor</label>
+            <input type="number" name="value" class="form-control" id="value" placeholder="R$" step="0.01" min="0.01"/>
+           </div>
 
-          <div class="mb-3">
-            <label for="password-login" class="form-label">Senha</label>
-            <input type="password" name="password" class="form-control" id="password-login" placeholder="********"/>
+            <button type="submit" className="btn btn-primary w-100">Depositar</button>
+    
           </div>
-
-       
-
-          <div class="mb-3 form-check d-flex justify-content-between flex-wrap">
-              <div class="mb-2">
-                  <input type="checkbox" class="form-check-input" name="keep_connected" id="auto-login"/>
-                  <label class="form-check-label" for="auto-login">Manter conectado?</label>
-              </div>
-
-              <a href="/cadastro" title="Não tem uma conta? Clique aqui e cadastre-se">Não tem uma conta? Clique aqui e cadastre-se</a>
-
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100">Entrar</button>
-        </form>
-    </section>
+      </section>
   </div>);
 }
 

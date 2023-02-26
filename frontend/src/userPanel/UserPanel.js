@@ -16,9 +16,10 @@ const UserPanel = ()=>{
                 </div>
             </div>
             
-            <h1 class="text-center mb-3">Área do Cliente</h1>
+            <h1 class="text-center mb-3">Banco Itaú</h1>
 
-            <div class="mb-3">
+            <h4 class="text-center mb-3 subtitle">Área do cliente</h4>
+            <div class="mb-3 client-infos">
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
                 <h6>Agência</h6>

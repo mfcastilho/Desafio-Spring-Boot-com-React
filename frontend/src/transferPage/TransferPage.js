@@ -15,23 +15,22 @@ const TransferPage = ()=>{
                 </div>
             </div>
             
-            <h1 class="text-center mb-3">Área do Cliente</h1>
+            <h1 class="text-center mb-3">Banco Itaú</h1>
 
-            <div class="mb-3">
+            <h4 class="text-center mb-3 subtitle">Área do cliente - Transferências</h4>
+            <div class="mb-3 client-infos">
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
                 <h6>Agência</h6>
             </div>
 
-            
             <div class="btns-container">
-              <a href="/userPanel/depositos" class="btn-actions">Depositar</a>
-              <a href="/userPanel/saques" class="btn-actions">Sacar</a>
-              <a href="/userPanel/transferencias" class="btn-actions">Transferências</a>
+              <a href="/userPanel/depositos" class="btn-actions">PIX</a>
+              <a href="/userPanel/saques" class="btn-actions">TED</a>
+              <a href="/userPanel/transferencias" class="btn-actions">DOC</a>
             </div>
-            
-
-        </div>
+    
+          </div>
       </section>
     </div>
   );

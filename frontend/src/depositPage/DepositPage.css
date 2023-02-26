@@ -3,22 +3,22 @@ main {
     min-height: 70vh;
 }
 
-.form-login {
-    margin: 100px auto 0 auto;
+.form-register {
+    margin: 50px auto;
     width: 70%;
-
+  
     padding: 40px;
-    border: 2px solid #6C4AB6;
+    border: 2px solid #0b53be;
     border-radius: 8px;
     position: relative;
     transition: .6s all;
-    
-}
-
-.form-login, form h1 {
-    color: #6C4AB6;
+  
+  }
+  
+  .form-register, div h1 {
+    color: #0b53be;
     font-weight: bold
-}
+  }
 
 .form-login form label, .form-login a {
     color: #6C4AB6;
