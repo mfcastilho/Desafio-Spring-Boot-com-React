@@ -30,14 +30,14 @@ const TedTransferPage = ()=>{
 
             <div className="mb-3">
             <label for="accountNumber" className="form-label">Conta</label>
-            <input type="text" className="form-control" name="accountNumber" id="accountNumber" placeholder="Insira a conta que deseja depositar"/>
+            <input type="text" className="form-control" name="accountNumber" id="accountNumber" placeholder="Insira a conta que deseja fazer a tranferência"/>
           </div>
             <div className="mb-3">
             <label for="password-login" className="form-label">Valor</label>
             <input type="number" name="value" className="form-control" id="value" placeholder="R$" step="0.01" min="0.01"/>
            </div>
 
-            <button type="submit" className="btn btn-primary w-100">Depositar</button>
+            <button type="submit" className="btn btn-primary w-100">Transferir</button>
     
           </div>
       </section>
