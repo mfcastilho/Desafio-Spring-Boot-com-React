@@ -3,8 +3,12 @@ import AuthAccountPage from "./authAccountPage/AuthAccountPage";
 import AuthPasswordPage from "./authPasswordPage/AuthPasswordPage";
 import UserPanel from "./userPanel/UserPanel";
 import DepositPage from "./depositPage/DepositPage";
-import TransferPage from "./transferPage/TransferPage";
 import WithdrawPage from "./withdrawPage/WithdrawPage";
+import TransferPage from "./transferPage/TransferPage";
+import PixTransferPage from "./pixTransferPage/PixTransferPage";
+import TedTransferPage from "./tedTransferPage/TedTransferPage";
+import DocTransferPage from "./docTransferPage/DocTransferPage";
+
 
 const RoutesApp = ()=>(
   <BrowserRouter>
@@ -15,6 +19,9 @@ const RoutesApp = ()=>(
       <Route path="/userPanel/depositos" element={<DepositPage/>} />
       <Route path="/userPanel/saques" element={<WithdrawPage/>} />
       <Route path="/userPanel/transferencias" element={<TransferPage/>} />
+      <Route path="/userPanel/transferencias/pix" element={<PixTransferPage/>} />
+      <Route path="/userPanel/transferencias/ted" element={<TedTransferPage/>} />
+      <Route path="/userPanel/transferencias/doc" element={<DocTransferPage/>} />
     </Routes>
   </BrowserRouter>
 )

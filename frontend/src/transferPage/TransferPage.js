@@ -22,12 +22,13 @@ const TransferPage = ()=>{
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
                 <h6>Agência</h6>
+                <h6>Saldo</h6>
             </div>
 
             <div class="btns-container">
-              <a href="/userPanel/depositos" class="btn-actions">PIX</a>
-              <a href="/userPanel/saques" class="btn-actions">TED</a>
-              <a href="/userPanel/transferencias" class="btn-actions">DOC</a>
+              <a href="/userPanel/transferencias/pix" class="btn-actions">PIX</a>
+              <a href="/userPanel/transferencias/ted" class="btn-actions">TED</a>
+              <a href="/userPanel/transferencias/doc" class="btn-actions">DOC</a>
             </div>
     
           </div>

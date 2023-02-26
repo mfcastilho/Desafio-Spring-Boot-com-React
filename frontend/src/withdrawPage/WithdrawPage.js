@@ -23,6 +23,7 @@ const WithdrawPage = ()=>{
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
                 <h6>Agência</h6>
+                <h6>Saldo</h6>
             </div>
 
             <div className="mb-3">

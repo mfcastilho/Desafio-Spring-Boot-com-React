@@ -1,9 +1,9 @@
 import React from "react";
-import "./DepositPage.css";
+import "./PixTransferPage.css";
 
 
 
-const DepositPage = ()=>{
+const PixTransferPage = ()=>{
 
   return(
   <div class="container">
@@ -19,7 +19,8 @@ const DepositPage = ()=>{
             
             <h1 class="text-center mb-3">Banco Itaú</h1>
 
-            <h4 class="text-center mb-3 subtitle">Área do cliente - Depósito</h4>
+            <h4 class="text-center mb-3">Área do cliente -Transferência</h4>
+            <h5 class="text-center mb-3 subtitle">PIX</h5>
             <div class="mb-3 client-infos">
                 <h6>Nome do Cliente</h6>
                 <h6>Número da Conta</h6>
@@ -44,4 +45,4 @@ const DepositPage = ()=>{
 }
 
 
-export default DepositPage;
+export default PixTransferPage;
