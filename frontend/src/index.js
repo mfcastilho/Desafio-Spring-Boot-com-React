@@ -4,13 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// const cors = require("cors");
-
-
-// cors.use(cors({
-//   origin:"http://localhost:3000",
-  
-// }))
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

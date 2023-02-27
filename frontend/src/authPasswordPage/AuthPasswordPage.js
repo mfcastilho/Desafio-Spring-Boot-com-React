@@ -18,20 +18,20 @@ const AuthPasswordPage = ()=>{
   }
  
 
-  return(<div class="container">
-  <section class="form-login">
-      <form class="w-75 mx-auto" action="/login" method="POST">
-          <h1 class="text-center mb-3">Banco Itaú</h1>
+  return(<div className="container">
+  <section className="form-login">
+      <form className="w-75 mx-auto" action="http://localhost:8080/usuario" method="POST">
+          <h1 className="text-center mb-3">Banco Itaú</h1>
 
-          <div class="mb-3">
-            <label for="password-login" class="form-label">Digite a sua senha</label>
-            <input type="password" name="password" class="form-control" id="password-login" placeholder="********" value={password} onChange={(e)=>{ setPassword(e.target.value)}} />
+          <div className="mb-3">
+            <label htmlFor="password-login" className="form-label">Digite a sua senha</label>
+            <input type="password" name="password" className="form-control" id="password-login" placeholder="********" value={password} onChange={(e)=>{ setPassword(e.target.value)}} />
           </div>
           <div>
             <p  className="danger"></p>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100" onClick={passwordValidation}>Acessar</button>
+          <button type="submit" className="btn btn-primary w-100" onClick={passwordValidation}>Acessar</button>
         </form>
   </section>
 </div>);

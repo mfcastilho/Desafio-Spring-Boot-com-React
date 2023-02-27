@@ -32,18 +32,21 @@
     <fullyQualifiedTypeName name="java.lang.Double"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.UserDTO"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.entities.User"/>
-    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.entities.Account"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.AccountDTO"/>
     <fullyQualifiedTypeName name="java.lang.StringIndexOutOfBoundsException"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.RequestDTO"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.AuthenticationException"/>
     <fullyQualifiedTypeName name="java.lang.Integer"/>
     <fullyQualifiedTypeName name="java.util.Optional"/>
     <fullyQualifiedTypeName name="javax.security.sasl.AuthenticationException"/>
     <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.entities.Account"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.transferRequestDTO"/>
+    <fullyQualifiedTypeName name="com.banco.projeto.testeturing.DTO.TransferRequestDTO"/>
     <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
     <fullyQualifiedTypeName name="com.banco.projeto.testeturing.exceptions.BusinessRulesException"/>
     <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
 </qualifiedTypeNameHistroy>
