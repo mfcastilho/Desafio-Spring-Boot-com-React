@@ -1,6 +1,8 @@
-import React from "react";
+
 import "./AuthAccountPage.css";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 const url_base = "http://localhost:8080";
 
@@ -8,25 +10,15 @@ const url_base = "http://localhost:8080";
 
 const AuthAccountPage = ()=>{
 
-  // axios.get(`https://cors-anywhere.herokuapp.com/${url_base}/conta/67890`);
-
-  // axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-  // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-
-  // axios.get(`${url_base}/conta/67890`,{
-  //   method: "GET",
-  //   mode:"cors",
-  //   headers:{
-  //     "Content-Type": "apllication/json"
-  //   }
-  // })
-  // .then((response) =>console.log("resposta da requisição = "+response))
-  // .catch(error=> console.log("reqisição falhou"));
-
-  axios.get(`${url_base}/conta/67890`,)
-  .then((response) =>console.log("resposta da requisição = "+response))
-  .catch(error=> console.log("reqisição falhou"));
   
+
+  useEffect(()=>{
+    axios.get(url_base+"/conta/67890")
+    .then((response) => console.log(response.data))
+    .catch("exibo um erro na tela")
+  },[])
+
+
 
  
   
@@ -45,7 +37,8 @@ const AuthAccountPage = ()=>{
           <button type="submit" className="btn btn-primary w-100 button">Acessar</button>
         </form>
     </section>
-  </div>);
+  </div>
+  );
 
 }
 
