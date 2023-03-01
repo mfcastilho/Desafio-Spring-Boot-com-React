@@ -1,6 +1,14 @@
 # Desafio Técnico - Vaga de Estágio para o Banco Itaú
 
-## teste-estag-canais
+## Tecnologias do Projeto :
+> ## - Java
+> ## - React
+> ## - Bootstrap
+
+## Para baixar as dependencias da aplicação frontend digite o comando: npm install
+## Para rodar a aplicação frontend digite o comando: npm start
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ![alt text](https://static.vecteezy.com/system/resources/previews/003/326/613/non_2x/software-engineering-concept-for-website-and-mobile-site-vector.jpg)
 
