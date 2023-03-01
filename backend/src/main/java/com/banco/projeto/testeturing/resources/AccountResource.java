@@ -65,12 +65,12 @@ public class AccountResource {
 			}catch (BusinessRulesException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());
 			}	
-		} catch (NullPointerException e) {
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		
-		// TODO: handle exception
+		
 		
 		
 		
@@ -80,18 +80,25 @@ public class AccountResource {
 	public ResponseEntity withDraw(@RequestBody RequestDTO request) {
 		
 		try {
-			System.out.println("Conta do Usuário:"+request.getAccountNumber());
-			System.out.println("Valor do saque:"+request.getValue());
-			
-			
-			
-			AccountDTO account = service.withDraw(request.getValue(), request.getAccountNumber());
-			
-			return ResponseEntity.ok().body(account);
-		} catch (BusinessRulesException e) {
+			try {
+				System.out.println("Conta do Usuário:"+request.getAccountNumber());
+				System.out.println("Valor do saque:"+request.getValue());
+				
+				
+				
+				AccountDTO account = service.withDraw(request.getValue(), request.getAccountNumber());
+				
+				return ResponseEntity.ok().body(account);
+			} catch (BusinessRulesException e) {
+				
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+		
+		
 		
 	}
 	
@@ -110,7 +117,7 @@ public class AccountResource {
 			} catch (BusinessRulesException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());
 			}
-		} catch (NullPointerException e) {
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -132,7 +139,7 @@ public class AccountResource {
 				
 				return ResponseEntity.badRequest().body(e.getMessage());
 			}
-		} catch (NullPointerException e) {
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -153,7 +160,7 @@ public class AccountResource {
 				return ResponseEntity.badRequest().body(e.getMessage());
 			}
 			
-		} catch (NullPointerException e) {
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

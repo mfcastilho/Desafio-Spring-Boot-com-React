@@ -9,6 +9,8 @@ const DepositPage = () => {
 
   const [accountNumber, setAccountNumber] = useState("");
   const [value, setValue] = useState("");
+  const [error, setError] = useState('');
+  const [cor] = useState('red');
 
 
   const location = useLocation();
@@ -26,7 +28,7 @@ const DepositPage = () => {
     };
 
     try {
-      const response = await axios.post(url_base + "/conta/sacar", data);
+      const response = await axios.post(url_base + "/conta/depositar", data);
       console.log(response.data);
       const obj = {
         name: response.data.titular.nomeCompleto,
@@ -36,7 +38,8 @@ const DepositPage = () => {
       }
       navigate("/userPanel", { state: { obj } });
     } catch (error) {
-      console.log(error)
+      setError(error.response.data);
+      console.log(error);
     }
   }
 
@@ -66,6 +69,10 @@ const DepositPage = () => {
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="form-register user-panel-box">
+      <div>
+        {error && <h3 style={{ color: cor }} className="show-msg">{error}</h3>}
+      </div>
+
         <div className="w-75 mx-auto">
           <div className="loading">
             <div className="d-flex justify-content-center">

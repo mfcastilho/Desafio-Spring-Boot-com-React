@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const url_base = "http://localhost:8080";
-
+var verifica = false;
 
 
 const TedTransferPage = () => {
@@ -15,8 +15,13 @@ const TedTransferPage = () => {
   const [error, setError] = useState('');
 
 
+  let saldoEmissor = null;
+  let saldoReceptor = null;
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [cor, setCor] = useState('red');
 
   const issuerAccountNumber = parseInt(location.state.obj.accountNumber);
 
@@ -30,31 +35,49 @@ const TedTransferPage = () => {
     };
 
     try {
-      const response = await axios.post(url_base + "/conta/transferencias/pix", data);
+      const response = await axios.post(url_base + "/conta/transferencias/ted", data);
       console.log(response.data);
       const obj = {
-        name: response.data.titular.nomeCompleto,
+        name: response.data.emissor.nomeCompleto,
         accountNumber: response.data.numeroConta,
         agency: response.data.agenciaConta,
-        accountBalance: response.data.saldoConta
+        accountBalance: response.data.saldoConta,
+        receiverAccountBalance: response.data.receptor.saldoConta
       }
-      navigate("/userPanel", { state: { obj } });
+      saldoEmissor = response.data.saldoConta;
+      saldoReceptor = response.data.receptor.saldoConta;
+
+      verifica = true;
+      validateResponse(verifica);
+
+      setTimeout(() => {
+        navigate("/userPanel", { state: { obj } });
+      }, 5000);
+
     } catch (error) {
       
-      alert(error.response.data)
+      verifica = false;
+      setError(error.response.data);
+
+      validateResponse(verifica);
     }
   }
 
-  const functionsHandler = () =>{
-    validateResponse();
-    tedFormularyValidation();
 
-  }
 
-  const validateResponse = (response)=>{
-    if (response) {
-      return 'Requisição bem-sucedida!';
+  const validateResponse = (verifica) => {
+
+    if (verifica) {
+
+      setCor("green");
+      setError(`Sua transferência foi realizada com sucesso!\n
+      Saldo do emissor: R$ ${saldoEmissor}\n
+      Saldo do receptor: R$ ${saldoReceptor}`)
+      return;
+
     } else {
+
+      setCor("red");
       return error;
     }
   }
@@ -95,8 +118,9 @@ const TedTransferPage = () => {
           </div>
 
           <div>
-            {error &&<h3 className="show-msg">{error}</h3>}
+            {error && <h3 style={{ color: cor }} className="show-msg">{error}</h3>}
           </div>
+
           <h1 className="text-center mb-3">Banco Itaú</h1>
 
           <h4 className="text-center mb-3">Área do cliente -Transferência</h4>
@@ -125,7 +149,7 @@ const TedTransferPage = () => {
             <p className="danger value-class"></p>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100" onClick={functionsHandler}>Transferir</button>
+          <button type="submit" className="btn btn-primary w-100" onClick={tedFormularyValidation}>Transferir</button>
 
         </div>
       </form>

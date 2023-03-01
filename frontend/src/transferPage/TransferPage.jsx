@@ -30,7 +30,7 @@ const TransferPage = ()=>{
       accountBalance: location.state.obj.accountBalance
     }
 
-    navigate("userPanel/transferencias/ted", { state: { obj } });
+    navigate("/userPanel/transferencias/ted", { state: { obj } });
 
   }
   ///
@@ -44,7 +44,7 @@ const TransferPage = ()=>{
       accountBalance: location.state.obj.accountBalance
     }
 
-    navigate("/userPanel/transferencias", { state: { obj } });
+    navigate("/userPanel/transferencias/doc", { state: { obj } });
 
   }
 

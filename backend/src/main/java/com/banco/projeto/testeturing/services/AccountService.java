@@ -73,6 +73,10 @@ public class AccountService {
 	public AccountDTO deposit(Double value, int accountNumber) {
 
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
+		
+		if(account ==  null) {
+			throw new AuthenticationException("Conta não encontrada");
+		}
 
 		System.out.println(account);
 		if (value <= 0) {
@@ -96,6 +100,10 @@ public class AccountService {
 	// Método para fazer saques
 	public AccountDTO withDraw(Double value, int accountNumber) {
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
+		
+		if(account ==  null) {
+			throw new AuthenticationException("Conta não encontrada");
+		}
 
 		if (value <= 0) {
 			throw new BusinessRulesException("Valor de saque inválido!");
@@ -129,6 +137,10 @@ public class AccountService {
 
 		// CONTA DO RECEPTOR
 		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+		
+		if(receiverAccount == null) {
+			throw new AuthenticationException("Conta não encontrada");
+		}
 
 		// VALOR MÁXIMO PARA TRANFERÊNCIAS VIA PIX
 		Double maxValue = 5000d;
@@ -203,6 +215,10 @@ public class AccountService {
 
 		// conta do RECEPTOR
 		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+		
+		if(receiverAccount == null) {
+			throw new AuthenticationException("Conta não encontrada");
+		}
 
 		// VALOR MÍNIMO PARA TRANFERÊNCIAS VIA TED
 		Double minValue = 5000d;
@@ -287,6 +303,10 @@ public class AccountService {
 
 		// conta do RECEPTOR
 		Account receiverAccount = repository.findUserAccountByAccountNumber(receiverAccountNumber);
+		
+		if(receiverAccount == null) {
+			throw new AuthenticationException("Conta não encontrada");
+		}
 
 		// VALOR MÍNIMO PARA TRANFERÊNCIAS VIA DOC
 		Double minValue = 10000d;

@@ -23,8 +23,6 @@ const PixTransferPage = () => {
 
   const issuerAccountNumber = parseInt(location.state.obj.accountNumber);
 
-  
-
   //método da requsição
   const handleSubmit = async (event) => {
     event.preventDefault();
