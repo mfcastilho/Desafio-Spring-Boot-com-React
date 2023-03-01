@@ -1,7 +1,52 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const TransferPage = ()=>{
+
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const passingToPixRoute = () => {
+
+    const obj = {
+      name: location.state.obj.name,
+      accountNumber: location.state.obj.accountNumber,
+      agency: location.state.obj.agency,
+      accountBalance: location.state.obj.accountBalance
+    }
+
+    navigate("/userPanel/transferencias/pix", { state: { obj } });
+
+  }
+
+  const passingToTedRoute = () => {
+
+    const obj = {
+      name: location.state.obj.name,
+      accountNumber: location.state.obj.accountNumber,
+      agency: location.state.obj.agency,
+      accountBalance: location.state.obj.accountBalance
+    }
+
+    navigate("userPanel/transferencias/ted", { state: { obj } });
+
+  }
+  ///
+
+  const passingToDocTransfersRoute = () => {
+
+    const obj = {
+      name: location.state.obj.name,
+      accountNumber: location.state.obj.accountNumber,
+      agency: location.state.obj.agency,
+      accountBalance: location.state.obj.accountBalance
+    }
+
+    navigate("/userPanel/transferencias", { state: { obj } });
+
+  }
 
   return (
     <div className="container">
@@ -19,16 +64,16 @@ const TransferPage = ()=>{
 
             <h4 className="text-center mb-3 subtitle">Área do cliente - Transferências</h4>
             <div className="mb-3 client-infos">
-                <h6>Nome do Cliente</h6>
-                <h6>Número da Conta</h6>
-                <h6>Agência</h6>
-                <h6>Saldo</h6>
+              <h6>Nome do Cliente:{location.state.obj.name}</h6>
+              <h6>Número da Conta:{location.state.obj.accountNumber}</h6>
+              <h6>Agência:{location.state.obj.agency}</h6>
+              <h6>Saldo: {location.state.obj.accountBalance}</h6>
             </div>
 
             <div className="btns-container">
-              <a href="/userPanel/transferencias/pix" className="btn-actions">PIX</a>
-              <a href="/userPanel/transferencias/ted" className="btn-actions">TED</a>
-              <a href="/userPanel/transferencias/doc" className="btn-actions">DOC</a>
+              <div onClick={passingToPixRoute} className="btn-actions">PIX</div>
+              <div onClick={passingToTedRoute} className="btn-actions">TED</div>
+              <div onClick={passingToDocTransfersRoute} className="btn-actions">DOC</div>
             </div>
     
           </div>

@@ -55,6 +55,12 @@ button{
     font-size: 12px;
 }
 
+.show-msg{
+    color: red;
+    margin-left: 3px;
+    font-size: 12px;      
+}
+
 @media (max-width: 768px) {
     .form-login {
         width: 90%;

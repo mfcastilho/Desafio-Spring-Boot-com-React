@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
+import com.banco.projeto.testeturing.DTO.ResponseAccountTransferDTO;
 import com.banco.projeto.testeturing.entities.Account;
+import com.banco.projeto.testeturing.exceptions.AuthenticationException;
 import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
 import com.banco.projeto.testeturing.repositories.AccountRepository;
 
@@ -29,15 +31,46 @@ public class AccountService {
 		return listAccountDTO;
 	}
 
-	// Validação para verificar se a conta existe
-	public int accountValidation(int account) {
-		int userId = repository.findUserIdByAccount(account);
-
-		return userId;
+	
+	public AccountDTO getUserAccountByUserId(Long userId) {
+		
+		Account account =repository.findUserAccountByUserId(userId);
+		
+		System.out.println("---aqui---");
+		System.out.println(account);
+		
+		if(account == null) {
+			throw new AuthenticationException("A conta não foi encontrada");
+			
+		}
+		AccountDTO accountDto = new AccountDTO(account);
+		
+		System.out.println(accountDto);
+		return accountDto;
 	}
+	
+	
+	// Validação para verificar se a conta existe
+	public Long accountValidation(int account) {
+		
+		Account acc = repository.findUserAccountByAccountNumber(account);
+		
+		if(acc == null) {
+			throw new AuthenticationException("Usuário não encontrado");
+		}
+		
+		
+
+		return acc.getId();
+	}
+	
+	
+	
+	
+	
 
 	// Método para fazer depósitos
-	public Double deposit(Double value, int accountNumber) {
+	public AccountDTO deposit(Double value, int accountNumber) {
 
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
 
@@ -51,12 +84,17 @@ public class AccountService {
 		repository.save(account);
 
 		account = repository.findUserAccountByAccountNumber(accountNumber);
+		AccountDTO accountDto = new AccountDTO(account);
 
-		return account.getSaldoConta();
+		return accountDto;
 	}
 
+	
+	
+	
+	
 	// Método para fazer saques
-	public Double withDraw(Double value, int accountNumber) {
+	public AccountDTO withDraw(Double value, int accountNumber) {
 		Account account = repository.findUserAccountByAccountNumber(accountNumber);
 
 		if (value <= 0) {
@@ -72,12 +110,19 @@ public class AccountService {
 		repository.save(account);
 
 		account = repository.findUserAccountByAccountNumber(accountNumber);
+		AccountDTO accountDto = new AccountDTO(account);
 
-		return account.getSaldoConta();
+		return accountDto;
 	}
 
+	
+	
+	
+	
+	
+	
 	// Método para fazer transferências via PIX
-	public String pixTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
+	public ResponseAccountTransferDTO pixTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
 		// CONTA DO EMISSOR
 		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
@@ -133,13 +178,25 @@ public class AccountService {
 
 		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
 		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
+		
+		ResponseAccountTransferDTO responseAccountTransferDTO = new ResponseAccountTransferDTO();
+		
+		responseAccountTransferDTO.setEmissor(issuerAccount.getTitular());
+		responseAccountTransferDTO.setAgenciaConta(issuerAccount.getAgenciaConta());
+		responseAccountTransferDTO.setNumeroConta(issuerAccount.getNumeroConta());
+		responseAccountTransferDTO.setSaldoConta(issuerAccount.getSaldoConta());
+		responseAccountTransferDTO.setReceptor(receiverAccount);
 
-		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
-				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
+		return responseAccountTransferDTO;
 	}
 
+	
+	
+	
+	
+	
 	// Método para fazer transferências via TED
-	public String tedTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
+	public ResponseAccountTransferDTO tedTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
 		// conta do EMISSOR
 		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
@@ -206,12 +263,24 @@ public class AccountService {
 		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
 		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
 
-		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
-				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
+		ResponseAccountTransferDTO responseAccountTransferDTO = new ResponseAccountTransferDTO();
+		
+		responseAccountTransferDTO.setEmissor(issuerAccount.getTitular());
+		responseAccountTransferDTO.setAgenciaConta(issuerAccount.getAgenciaConta());
+		responseAccountTransferDTO.setNumeroConta(issuerAccount.getNumeroConta());
+		responseAccountTransferDTO.setSaldoConta(issuerAccount.getSaldoConta());
+		responseAccountTransferDTO.setReceptor(receiverAccount);
+
+		return responseAccountTransferDTO;
 	}
+	
+	
+	
+	
+	
 
 	// Método para fazer transferências via DOC
-	public String docTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
+	public ResponseAccountTransferDTO docTransfer(int issuerAccountNumber, int receiverAccountNumber, Double value) {
 
 		// conta do EMISSOR
 		Account issuerAccount = repository.findUserAccountByAccountNumber(issuerAccountNumber);
@@ -268,8 +337,15 @@ public class AccountService {
 		// PEGANDO AS INFORMAÇÕES ATUALIAZADAS do emissor
 		issuerAccount = repository.findUserAccountByAccountNumber(issuerAccount.getNumeroConta());
 
-		return "Sua transferência foi realizada com sucesso!\n" + "Saldo do emissor: R$" + issuerAccount.getSaldoConta()
-				+ "\n" + "Saldo do receptor: R$" + receiverAccount.getSaldoConta();
+		ResponseAccountTransferDTO responseAccountTransferDTO = new ResponseAccountTransferDTO();
+		
+		responseAccountTransferDTO.setEmissor(issuerAccount.getTitular());
+		responseAccountTransferDTO.setAgenciaConta(issuerAccount.getAgenciaConta());
+		responseAccountTransferDTO.setNumeroConta(issuerAccount.getNumeroConta());
+		responseAccountTransferDTO.setSaldoConta(issuerAccount.getSaldoConta());
+		responseAccountTransferDTO.setReceptor(receiverAccount);
+
+		return responseAccountTransferDTO;
 
 	}
 	

@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banco.projeto.testeturing.DTO.AccountDTO;
+import com.banco.projeto.testeturing.DTO.AccountNumberDTO;
 import com.banco.projeto.testeturing.DTO.RequestDTO;
+import com.banco.projeto.testeturing.DTO.ResponseAccountTransferDTO;
 import com.banco.projeto.testeturing.DTO.TransferRequestDTO;
+import com.banco.projeto.testeturing.exceptions.AuthenticationException;
 import com.banco.projeto.testeturing.exceptions.BusinessRulesException;
 import com.banco.projeto.testeturing.services.AccountService;
 
@@ -32,15 +35,15 @@ public class AccountResource {
 	}
 
 	
-	@GetMapping(value = "/{account}")
-	public ResponseEntity findUserAccountByAccountNumber(@PathVariable int account){
+	@PostMapping
+	public ResponseEntity findUserAccountByAccountNumber(@RequestBody AccountNumberDTO account){
 		
 		try {
 			
-			int userId =service.accountValidation(account);
+			Long userId =service.accountValidation(account.getAccountNumber());
 			return ResponseEntity.ok().body(userId);
 			
-		} catch (RuntimeException e) {
+		} catch (AuthenticationException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -55,10 +58,10 @@ public class AccountResource {
 		try {
 			System.out.println("Conta do Usuário:"+request.getAccountNumber());
 			System.out.println("Valor do depósito:"+request.getValue());
-			int res = service.accountValidation(request.getAccountNumber());
+			Long res = service.accountValidation(request.getAccountNumber());
 			try {
-				service.deposit(request.getValue(), request.getAccountNumber());
-				return ResponseEntity.ok().body(request);
+				AccountDTO account = service.deposit(request.getValue(), request.getAccountNumber());
+				return ResponseEntity.ok().body(account);
 			}catch (BusinessRulesException e) {
 				return ResponseEntity.badRequest().body(e.getMessage());
 			}	
@@ -82,9 +85,9 @@ public class AccountResource {
 			
 			
 			
-			Double accountBalance = service.withDraw(request.getValue(), request.getAccountNumber());
+			AccountDTO account = service.withDraw(request.getValue(), request.getAccountNumber());
 			
-			return ResponseEntity.ok().body("Saldo atual da conta:$"+accountBalance);
+			return ResponseEntity.ok().body(account);
 		} catch (BusinessRulesException e) {
 			
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -97,11 +100,11 @@ public class AccountResource {
 	public ResponseEntity pixTransfer( @RequestBody TransferRequestDTO request) {
 		
 		try {
-			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			Long receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
 			
 			try {
 				
-				String response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				ResponseAccountTransferDTO response = service.pixTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
 				return ResponseEntity.ok().body(response);
 				
 			} catch (BusinessRulesException e) {
@@ -119,10 +122,10 @@ public class AccountResource {
 		
 		try {
 			
-			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			Long receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
 			try {
 				
-				String response = service.tedTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				ResponseAccountTransferDTO response = service.tedTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
 				return ResponseEntity.ok().body(response);
 				
 			} catch (BusinessRulesException e) {
@@ -139,11 +142,11 @@ public class AccountResource {
 	@PostMapping(value = "/transferencias/doc")
 	public ResponseEntity docTransfer(@RequestBody TransferRequestDTO request) {
 		try {
-			int receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
+			Long receiverAccountNumberId = service.accountValidation(request.getReceiverAccountNumber());
 			
 			try {
 				
-				String response = service.docTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
+				ResponseAccountTransferDTO response = service.docTransfer(request.getIssuerAccountNumber(), request.getReceiverAccountNumber(), request.getValue());
 				return ResponseEntity.ok().body(response);
 				
 			} catch (BusinessRulesException e) {
