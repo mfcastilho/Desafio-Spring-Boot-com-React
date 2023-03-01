@@ -5,8 +5,15 @@
 > ## - React
 > ## - Bootstrap
 
-## Para baixar as dependencias da aplicação frontend digite o comando: npm install
-## Para rodar a aplicação frontend digite o comando: npm start
+## Para baixar as dependencias da aplicação frontend digite o comando: 
+### `npm install`
+## Para rodar a aplicação frontend digite o comando:
+### `npm start`
+In the project directory, you can run:
+
+
+Execute o aplicativo no modo de desenvolvimento.\
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no seu navegador.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
